@@ -10,7 +10,7 @@ Public Class ApiService
     End Sub
 
     Public Async Function GetArtistsAsync() As Task(Of List(Of Artist))
-        Dim response = Await client.GetAsync("api/artists")
+        Dim response = Await client.GetAsync("api/artist")
         If response.IsSuccessStatusCode Then
             Dim json = Await response.Content.ReadAsStringAsync()
             Return JsonConvert.DeserializeObject(Of List(Of Artist))(json)

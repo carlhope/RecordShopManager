@@ -23,6 +23,8 @@ Partial Class ArtistPanel
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Label1 = New Label()
+        dgvArtists = New DataGridView()
+        CType(dgvArtists, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -34,16 +36,28 @@ Partial Class ArtistPanel
         Label1.TabIndex = 0
         Label1.Text = "This is the Artist panel"
         ' 
+        ' dgvArtists
+        ' 
+        dgvArtists.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvArtists.Dock = DockStyle.Fill
+        dgvArtists.Location = New Point(0, 0)
+        dgvArtists.Name = "dgvArtists"
+        dgvArtists.Size = New Size(150, 150)
+        dgvArtists.TabIndex = 1
+        ' 
         ' ArtistPanel
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(dgvArtists)
         Controls.Add(Label1)
         Name = "ArtistPanel"
+        CType(dgvArtists, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
     Friend WithEvents Label1 As Label
+    Friend WithEvents dgvArtists As DataGridView
 
 End Class

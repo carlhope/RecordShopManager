@@ -2,6 +2,10 @@
 Partial Class Dashboard
     Inherits System.Windows.Forms.Form
 
+    Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadArtistPanel()
+    End Sub
+
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(disposing As Boolean)
@@ -23,9 +27,9 @@ Partial Class Dashboard
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         PnlSidebar = New Panel()
-        PnlContent = New Panel()
-        BtnArtist = New Button()
         BtnAlbum = New Button()
+        BtnArtist = New Button()
+        PnlContent = New Panel()
         PnlSidebar.SuspendLayout()
         SuspendLayout()
         ' 
@@ -40,13 +44,14 @@ Partial Class Dashboard
         PnlSidebar.Size = New Size(224, 450)
         PnlSidebar.TabIndex = 0
         ' 
-        ' PnlContent
+        ' BtnAlbum
         ' 
-        PnlContent.Dock = DockStyle.Fill
-        PnlContent.Location = New Point(224, 0)
-        PnlContent.Name = "PnlContent"
-        PnlContent.Size = New Size(576, 450)
-        PnlContent.TabIndex = 1
+        BtnAlbum.Location = New Point(0, 73)
+        BtnAlbum.Name = "BtnAlbum"
+        BtnAlbum.Size = New Size(224, 23)
+        BtnAlbum.TabIndex = 1
+        BtnAlbum.Text = "Albums"
+        BtnAlbum.UseVisualStyleBackColor = True
         ' 
         ' BtnArtist
         ' 
@@ -57,14 +62,13 @@ Partial Class Dashboard
         BtnArtist.Text = "Artists"
         BtnArtist.UseVisualStyleBackColor = True
         ' 
-        ' BtnAlbum
+        ' PnlContent
         ' 
-        BtnAlbum.Location = New Point(0, 73)
-        BtnAlbum.Name = "BtnAlbum"
-        BtnAlbum.Size = New Size(224, 23)
-        BtnAlbum.TabIndex = 1
-        BtnAlbum.Text = "Albums"
-        BtnAlbum.UseVisualStyleBackColor = True
+        PnlContent.Dock = DockStyle.Fill
+        PnlContent.Location = New Point(224, 0)
+        PnlContent.Name = "PnlContent"
+        PnlContent.Size = New Size(576, 450)
+        PnlContent.TabIndex = 1
         ' 
         ' Dashboard
         ' 
@@ -83,5 +87,12 @@ Partial Class Dashboard
     Friend WithEvents BtnArtist As Button
     Friend WithEvents PnlContent As Panel
     Friend WithEvents BtnAlbum As Button
+
+    Private Sub LoadArtistPanel()
+        PnlContent.Controls.Clear()
+        Dim artistUI As New ArtistPanel()
+        artistUI.Dock = DockStyle.Fill
+        PnlContent.Controls.Add(artistUI)
+    End Sub
 
 End Class
