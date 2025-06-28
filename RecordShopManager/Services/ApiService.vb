@@ -39,6 +39,9 @@ Public Class ApiService
         Using client As New HttpClient()
             client.BaseAddress = New Uri("https://localhost:7097/")
             client.DefaultRequestHeaders.Accept.Add(New Headers.MediaTypeWithQualityHeaderValue("application/json"))
+            artist.Id = 0
+            artist.AlbumJunction = New List(Of ArtistAlbumJunction)()
+
 
             Dim json = JsonConvert.SerializeObject(artist)
             Dim content = New StringContent(json, Encoding.UTF8, "application/json")

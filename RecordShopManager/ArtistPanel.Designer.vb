@@ -20,10 +20,11 @@ Partial Class ArtistPanel
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Label1 = New Label()
         dgvArtists = New DataGridView()
+        TableLayoutPanel1 = New TableLayoutPanel()
         CType(dgvArtists, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -35,29 +36,60 @@ Partial Class ArtistPanel
         Label1.Size = New Size(123, 15)
         Label1.TabIndex = 0
         Label1.Text = "This is the Artist panel"
-        ' 
+        '
+        ' btn
+        '
+        Dim btnAddArtist As New Button()
+        btnAddArtist.Name = "btnAddArtist"
+        btnAddArtist.Text = "Add Artist"
+        btnAddArtist.AutoSize = True
+        AddHandler btnAddArtist.Click, AddressOf btnAddArtist_Click
+        '
         ' dgvArtists
         ' 
         dgvArtists.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvArtists.Dock = DockStyle.Fill
-        dgvArtists.Location = New Point(0, 0)
+        dgvArtists.Location = New Point(0, 43)
         dgvArtists.Name = "dgvArtists"
-        dgvArtists.Size = New Size(150, 150)
+        dgvArtists.Size = New Size(150, 107)
         dgvArtists.TabIndex = 1
+        dgvArtists.Dock = DockStyle.Fill
+        ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 1
+        TableLayoutPanel1.ColumnStyles.Clear()
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
+        TableLayoutPanel1.Location = New Point(6, 17)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
+        TableLayoutPanel1.TabIndex = 2
+        TableLayoutPanel1.Controls.Add(Label1, 0, 0)
+        TableLayoutPanel1.Controls.Add(btnAddArtist, 0, 1)
+        TableLayoutPanel1.Controls.Add(dgvArtists, 0, 2)
+        TableLayoutPanel1.Dock = DockStyle.Fill
         ' 
         ' ArtistPanel
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(dgvArtists)
-        Controls.Add(Label1)
+        Controls.Add(TableLayoutPanel1)
         Name = "ArtistPanel"
         CType(dgvArtists, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
+    Private Async Sub btnAddArtist_Click(sender As Object, e As EventArgs)
+        Dim addForm As New AddArtistForm()
+        If addForm.ShowDialog() = DialogResult.OK Then
+            Await LoadArtistDataAsync()
+        End If
+    End Sub
 
     Friend WithEvents Label1 As Label
     Friend WithEvents dgvArtists As DataGridView
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 
 End Class
