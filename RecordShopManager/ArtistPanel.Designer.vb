@@ -73,7 +73,6 @@ Partial Class ArtistPanel
         btnAddArtist.Size = New Size(75, 25)
         btnAddArtist.TabIndex = 1
         btnAddArtist.Text = "Add Artist"
-        AddHandler btnAddArtist.Click, AddressOf btnAddArtist_Click
         ' 
         ' ArtistPanel
         ' 
@@ -85,6 +84,11 @@ Partial Class ArtistPanel
         TableLayoutPanel1.ResumeLayout(False)
         TableLayoutPanel1.PerformLayout()
         ResumeLayout(False)
+    End Sub
+    Public Sub New()
+        MyBase.New()
+        InitializeComponent()
+        AddHandler btnAddArtist.Click, AddressOf btnAddArtist_Click
     End Sub
     Private Async Sub btnAddArtist_Click(sender As Object, e As EventArgs)
         Dim addForm As New AddArtistForm()
