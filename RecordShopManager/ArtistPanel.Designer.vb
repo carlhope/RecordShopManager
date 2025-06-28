@@ -25,51 +25,55 @@ Partial Class ArtistPanel
         Label1 = New Label()
         dgvArtists = New DataGridView()
         TableLayoutPanel1 = New TableLayoutPanel()
+        btnAddArtist = New Button()
         CType(dgvArtists, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(0, 0)
+        Label1.Location = New Point(3, 0)
         Label1.Name = "Label1"
         Label1.Size = New Size(123, 15)
         Label1.TabIndex = 0
         Label1.Text = "This is the Artist panel"
-        '
-        ' btn
-        '
-        Dim btnAddArtist As New Button()
-        btnAddArtist.Name = "btnAddArtist"
-        btnAddArtist.Text = "Add Artist"
-        btnAddArtist.AutoSize = True
-        AddHandler btnAddArtist.Click, AddressOf btnAddArtist_Click
-        '
+        ' 
         ' dgvArtists
         ' 
         dgvArtists.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvArtists.Location = New Point(0, 43)
-        dgvArtists.Name = "dgvArtists"
-        dgvArtists.Size = New Size(150, 107)
-        dgvArtists.TabIndex = 1
         dgvArtists.Dock = DockStyle.Fill
+        dgvArtists.Location = New Point(3, 49)
+        dgvArtists.Name = "dgvArtists"
+        dgvArtists.Size = New Size(144, 98)
+        dgvArtists.TabIndex = 1
         ' 
         ' TableLayoutPanel1
         ' 
         TableLayoutPanel1.ColumnCount = 1
-        TableLayoutPanel1.ColumnStyles.Clear()
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100.0F))
-        TableLayoutPanel1.Location = New Point(6, 17)
-        TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 3
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
-        TableLayoutPanel1.TabIndex = 2
         TableLayoutPanel1.Controls.Add(Label1, 0, 0)
         TableLayoutPanel1.Controls.Add(btnAddArtist, 0, 1)
         TableLayoutPanel1.Controls.Add(dgvArtists, 0, 2)
         TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle())
+        TableLayoutPanel1.RowStyles.Add(New RowStyle())
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F))
+        TableLayoutPanel1.Size = New Size(150, 150)
+        TableLayoutPanel1.TabIndex = 2
+        ' 
+        ' btnAddArtist
+        ' 
+        btnAddArtist.AutoSize = True
+        btnAddArtist.Location = New Point(3, 18)
+        btnAddArtist.Name = "btnAddArtist"
+        btnAddArtist.Size = New Size(75, 25)
+        btnAddArtist.TabIndex = 1
+        btnAddArtist.Text = "Add Artist"
+        AddHandler btnAddArtist.Click, AddressOf btnAddArtist_Click
         ' 
         ' ArtistPanel
         ' 
@@ -78,8 +82,9 @@ Partial Class ArtistPanel
         Controls.Add(TableLayoutPanel1)
         Name = "ArtistPanel"
         CType(dgvArtists, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
+        TableLayoutPanel1.PerformLayout()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
     Private Async Sub btnAddArtist_Click(sender As Object, e As EventArgs)
         Dim addForm As New AddArtistForm()
@@ -91,5 +96,6 @@ Partial Class ArtistPanel
     Friend WithEvents Label1 As Label
     Friend WithEvents dgvArtists As DataGridView
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents btnAddArtist As Button
 
 End Class
