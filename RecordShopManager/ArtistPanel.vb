@@ -66,8 +66,4 @@
             End If
         End If
     End Sub
-
-    Private Sub dgvArtists_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvArtists.CellContentClick
-
-    End Sub
 End Class

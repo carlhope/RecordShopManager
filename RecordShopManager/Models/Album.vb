@@ -10,9 +10,9 @@ Public Class Album
     <JsonProperty("description")>
     Public Property Description As String
 
-    <JsonProperty("artistJunction")>
-    Public Property ArtistJunction As List(Of ArtistAlbumJunction)
+    '<JsonProperty("artistJunction")>
+    'Public Property ArtistJunction As List(Of ArtistAlbumJunction)
 
-    <JsonProperty("genres")>
-    Public Property Genres As List(Of AlbumGenre)
+    '<JsonProperty("genres")>
+    'Public Property Genres As List(Of AlbumGenre)
 End Class
