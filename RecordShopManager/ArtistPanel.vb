@@ -12,6 +12,8 @@
             'Auto generate columns based on the Artist class properties
             dgvArtists.AutoGenerateColumns = True
             dgvArtists.DataSource = artists
+            dgvArtists.Columns("Name").HeaderText = "Artist Name"
+            dgvArtists.Columns("Id").Visible = False
 
             ' Add Edit column
             Dim editButton As New DataGridViewButtonColumn()

@@ -24,7 +24,7 @@ Partial Class AlbumPanel
     Private Sub InitializeComponent()
         Label1 = New Label()
         dgvAlbums = New DataGridView()
-        Button1 = New Button()
+        BtnAddAlbum = New Button()
         layoutPanel = New TableLayoutPanel()
         CType(dgvAlbums, ComponentModel.ISupportInitialize).BeginInit()
         layoutPanel.SuspendLayout()
@@ -48,21 +48,21 @@ Partial Class AlbumPanel
         dgvAlbums.Size = New Size(144, 100)
         dgvAlbums.TabIndex = 1
         ' 
-        ' Button1
+        ' BtnAddAlbum
         ' 
-        Button1.Location = New Point(3, 18)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(75, 23)
-        Button1.TabIndex = 2
-        Button1.Text = "Button1"
-        Button1.UseVisualStyleBackColor = True
+        BtnAddAlbum.Location = New Point(3, 18)
+        BtnAddAlbum.Name = "BtnAddAlbum"
+        BtnAddAlbum.Size = New Size(109, 23)
+        BtnAddAlbum.TabIndex = 2
+        BtnAddAlbum.Text = "Add Album"
+        BtnAddAlbum.UseVisualStyleBackColor = True
         ' 
         ' layoutPanel
         ' 
         layoutPanel.ColumnCount = 1
         layoutPanel.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20.0F))
         layoutPanel.Controls.Add(Label1, 0, 0)
-        layoutPanel.Controls.Add(Button1, 0, 1)
+        layoutPanel.Controls.Add(BtnAddAlbum, 0, 1)
         layoutPanel.Controls.Add(dgvAlbums, 0, 2)
         layoutPanel.Dock = DockStyle.Fill
         layoutPanel.Location = New Point(0, 0)
@@ -88,7 +88,7 @@ Partial Class AlbumPanel
 
     Friend WithEvents Label1 As Label
     Friend WithEvents dgvAlbums As DataGridView
-    Friend WithEvents Button1 As Button
+    Friend WithEvents BtnAddAlbum As Button
 
     Private Async Function LoadAlbumDataAsync() As Task
         Try
@@ -98,11 +98,55 @@ Partial Class AlbumPanel
             dgvAlbums.Columns.Clear()
             dgvAlbums.AutoGenerateColumns = True
             dgvAlbums.DataSource = albums
+            dgvAlbums.Columns("Title").HeaderText = "Album Title"
+            dgvAlbums.Columns("Description").HeaderText = "Description"
+            dgvAlbums.Columns("Id").Visible = False ' If you don’t need to show the ID
+            If Not dgvAlbums.Columns.Contains("btnEdit") Then
+                Dim editButtonColumn As New DataGridViewButtonColumn()
+                editButtonColumn.Name = "btnEdit"
+                editButtonColumn.HeaderText = "Actions"
+                editButtonColumn.Text = "Edit"
+                editButtonColumn.UseColumnTextForButtonValue = True
+                dgvAlbums.Columns.Add(editButtonColumn)
+            End If
+            If Not dgvAlbums.Columns.Contains("btnDelete") Then
+                Dim deleteButtonColumn As New DataGridViewButtonColumn()
+                deleteButtonColumn.Name = "btnDelete"
+                deleteButtonColumn.HeaderText = ""
+                deleteButtonColumn.Text = "Delete"
+                deleteButtonColumn.UseColumnTextForButtonValue = True
+                dgvAlbums.Columns.Add(deleteButtonColumn)
+            End If
 
         Catch ex As Exception
             MessageBox.Show("Failed to load albums: " & ex.Message)
         End Try
     End Function
+    Private Async Sub dgvAlbums_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvAlbums.CellClick
+        If e.RowIndex < 0 Then Exit Sub
+
+        Dim selectedAlbum As Album = CType(dgvAlbums.Rows(e.RowIndex).DataBoundItem, Album)
+
+        Select Case dgvAlbums.Columns(e.ColumnIndex).Name
+            Case "btnEdit"
+                Dim editForm As New EditAlbumForm(selectedAlbum)
+                If editForm.ShowDialog() = DialogResult.OK Then
+                    Await LoadAlbumDataAsync()
+                End If
+
+            Case "btnDelete"
+                Dim confirm = MessageBox.Show($"Delete album '{selectedAlbum.Title}'?", "Confirm Delete", MessageBoxButtons.YesNo)
+                If confirm = DialogResult.Yes Then
+                    Dim service As New ApiService()
+                    Dim success = Await service.DeleteAlbumAsync(selectedAlbum.Id)
+                    If success Then
+                        Await LoadAlbumDataAsync()
+                    Else
+                        MessageBox.Show("Failed to delete album.")
+                    End If
+                End If
+        End Select
+    End Sub
 
     Friend WithEvents layoutPanel As TableLayoutPanel
 

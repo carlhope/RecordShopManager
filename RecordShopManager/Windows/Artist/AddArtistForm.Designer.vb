@@ -2,6 +2,9 @@
 Partial Class AddArtistForm
     Inherits System.Windows.Forms.Form
 
+    Friend WithEvents btnSubmit As Button
+    Friend WithEvents btnCancel As Button
+
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -42,22 +45,26 @@ Partial Class AddArtistForm
         txtName.Width = 240
 
         ' === Submit Button ===
-        Dim btnSubmit As New Button()
+        btnSubmit = New Button()
         btnSubmit.Text = "Submit"
         btnSubmit.Location = New Point(20, 90)
-        AddHandler btnSubmit.Click, AddressOf btnSubmit_Click
+
 
         ' === Cancel Button ===
-        Dim btnCancel As New Button()
+
+        btnCancel = New Button()
         btnCancel.Text = "Cancel"
         btnCancel.Location = New Point(120, 90)
-        AddHandler btnCancel.Click, Sub() Me.Close()
-
         ' === Add controls to form ===
         Me.Controls.Add(lblName)
         Me.Controls.Add(txtName)
         Me.Controls.Add(btnSubmit)
         Me.Controls.Add(btnCancel)
+    End Sub
+    Public Sub New()
+        InitializeComponent()
+        AddHandler btnSubmit.Click, AddressOf btnSubmit_Click
+        AddHandler btnCancel.Click, Sub() Me.Close()
     End Sub
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs)
         Dim name = Me.Controls("txtName").Text.Trim()
